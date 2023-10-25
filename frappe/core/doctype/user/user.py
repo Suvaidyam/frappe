@@ -58,11 +58,11 @@ class User(Document):
 		birth_date: DF.Date | None
 		block_modules: DF.Table[BlockModule]
 		bypass_restrict_ip_check_if_2fa_enabled: DF.Check
-		csc: DF.Link | None
+		csc: DF.Link
 		defaults: DF.Table[DefaultValue]
-		desk_theme: DF.Literal['Light', 'Dark', 'Automatic']
+		desk_theme: DF.Literal["Light", "Dark", "Automatic"]
 		district: DF.Link | None
-		document_follow_frequency: DF.Literal['Hourly', 'Daily', 'Weekly']
+		document_follow_frequency: DF.Literal["Hourly", "Daily", "Weekly"]
 		document_follow_notify: DF.Check
 		email: DF.Data
 		email_signature: DF.SmallText | None
@@ -93,13 +93,13 @@ class User(Document):
 		mobile_no: DF.Data | None
 		module_profile: DF.Link | None
 		mute_sounds: DF.Check
-		new_password: DF.Password | None
+		new_password: DF.Password
 		onboarding_status: DF.SmallText | None
 		phone: DF.Data | None
 		redirect_url: DF.SmallText | None
 		reset_password_key: DF.Data | None
 		restrict_ip: DF.SmallText | None
-		role_profile_name: DF.Link | None
+		role_profile_name: DF.Link
 		roles: DF.Table[HasRole]
 		send_me_a_copy: DF.Check
 		send_welcome_email: DF.Check

@@ -220,7 +220,8 @@
    "fieldtype": "Link",
    "label": "Role Profile",
    "options": "Role Profile",
-   "permlevel": 1
+   "permlevel": 1,
+   "reqd": 1
   },
   {
    "fieldname": "roles_html",
@@ -314,10 +315,12 @@
    "label": "Change Password"
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "new_password",
    "fieldtype": "Password",
    "label": "Set New Password",
-   "no_copy": 1
+   "no_copy": 1,
+   "reqd": 1
   },
   {
    "default": "1",
@@ -705,6 +708,7 @@
    "label": "Onboarding Status"
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "state",
    "fieldtype": "Link",
    "label": "State",
@@ -717,10 +721,12 @@
    "options": "District"
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "csc",
    "fieldtype": "Link",
    "label": "CSC",
-   "options": "CSC"
+   "options": "CSC",
+   "reqd": 1
   }
  ],
  "icon": "fa fa-user",
@@ -783,7 +789,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2023-10-10 18:03:25.848034",
+ "modified": "2023-10-25 10:49:28.538337",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",
