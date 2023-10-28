@@ -724,8 +724,8 @@
    "allow_in_quick_entry": 1,
    "fieldname": "csc",
    "fieldtype": "Link",
-   "label": "CSC",
-   "options": "CSC",
+   "label": "Centre",
+   "options": "Centre",
    "reqd": 1
   }
  ],
@@ -789,7 +789,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2023-10-25 10:49:28.538337",
+ "modified": "2023-10-28 15:03:42.198487",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",
