@@ -320,8 +320,7 @@
    "fieldname": "new_password",
    "fieldtype": "Password",
    "label": "Set New Password",
-   "no_copy": 1,
-   "reqd": 1
+   "no_copy": 1
   },
   {
    "default": "1",
@@ -790,7 +789,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2023-10-31 17:58:35.243644",
+ "modified": "2023-10-31 18:53:49.334546",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",

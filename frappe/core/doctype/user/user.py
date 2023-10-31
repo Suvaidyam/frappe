@@ -93,7 +93,7 @@ class User(Document):
 		mobile_no: DF.Data | None
 		module_profile: DF.Link | None
 		mute_sounds: DF.Check
-		new_password: DF.Password
+		new_password: DF.Password | None
 		onboarding_status: DF.SmallText | None
 		phone: DF.Data | None
 		redirect_url: DF.SmallText | None
