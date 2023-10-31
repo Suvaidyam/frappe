@@ -140,6 +140,7 @@
    "oldfieldtype": "Data"
   },
   {
+   "allow_in_quick_entry": 1,
    "bold": 1,
    "fieldname": "last_name",
    "fieldtype": "Data",
@@ -789,7 +790,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2023-10-28 15:03:42.198487",
+ "modified": "2023-10-31 17:58:35.243644",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",
