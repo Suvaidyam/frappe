@@ -132,29 +132,32 @@ frappe.ui.form.on("User", {
 		frm.toggle_display(["sb1", "sb3", "modules_access"], false);
 
 		if (!frm.is_new()) {
-			if (has_access_to_edit_user()) {
-				frm.add_custom_button(
-					__("Set User Permissions"),
-					function () {
-						frappe.route_options = {
-							user: doc.name,
-						};
-						frappe.set_route("List", "User Permission");
-					},
-					__("Permissions")
-				);
-
-				frm.add_custom_button(
-					__("View Permitted Documents"),
-					() =>
-						frappe.set_route("query-report", "Permitted Documents For User", {
-							user: frm.doc.name,
-						}),
-					__("Permissions")
-				);
-
-				frm.toggle_display(["sb1", "sb3", "modules_access"], true);
+			if(frappe.user.has_role("Administrator")){
+				if (has_access_to_edit_user()) {
+					frm.add_custom_button(
+						__("Set User Permissions"),
+						function () {
+							frappe.route_options = {
+								user: doc.name,
+							};
+							frappe.set_route("List", "User Permission");
+						},
+						__("Permissions")
+					);
+	
+					frm.add_custom_button(
+						__("View Permitted Documents"),
+						() =>
+							frappe.set_route("query-report", "Permitted Documents For User", {
+								user: frm.doc.name,
+							}),
+						__("Permissions")
+					);
+	
+					frm.toggle_display(["sb1", "sb3", "modules_access"], true);
+				}
 			}
+
 
 			frm.add_custom_button(
 				__("Reset Password"),
@@ -263,9 +266,12 @@ frappe.ui.form.on("User", {
 				}
 			}
 			if (!found) {
-				frm.add_custom_button(__("Create User Email"), function () {
-					frm.events.create_user_email(frm);
-				});
+				if(frappe.user.has_role("Administrator")){
+					frm.add_custom_button(__("Create User Email"), function () {
+						frm.events.create_user_email(frm);
+					});
+				}
+				
 			}
 		}
 
