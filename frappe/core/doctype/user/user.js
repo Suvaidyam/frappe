@@ -277,9 +277,25 @@ frappe.ui.form.on("User", {
 			frm.dirty();
 		}
 		frm.trigger("time_zone");
+		// var centre = frm.get_field('csc');
+		frm.set_df_property('csc', 'reqd', 1);
 		frm.set_query("state", () => {
 			return { page_length: 1000 };
 		  });
+		frm.fields_dict["csc"].get_query = function (doc) {
+			return {
+			  filters: {
+				State: "Please Select State",
+			  },
+			};
+		},
+		frm.fields_dict["district"].get_query = function (doc) {
+			return {
+			  filters: {
+				State: "Please Select State",
+			  },
+			};
+		}
 	},
 	validate: function (frm) {
 		if (frm.roles_editor) {
@@ -364,18 +380,18 @@ frappe.ui.form.on("User", {
 		  frm.set_value('csc', '')
 		  frm.set_value('district', '')
 	},
-	// district:function(frm){
-	// 	console.log("district update")
-	// },
-	// csc:function(frm){
-	// 	console.log("centre update")
-	// },
-	// role_profile:function(frm){
-	// 	console.log("role")
-	// },
-	// frm.fields_dict['field_1'].change(function(){
-
-	// })
+	role_profile_name:function(frm){
+		var centre = frm.get_field('csc');
+		if(frm.doc.role_profile_name === 'MIS executive'){
+			console.log(frm.doc.role_profile_name)
+			centre.df.hidden = 0;
+			centre.refresh();
+		}else{
+			centre.df.hidden = 1;
+			frm.set_df_property('csc', 'reqd', 0);
+			centre.refresh();
+		}
+	}
 });
 
 frappe.ui.form.on("User Email", {

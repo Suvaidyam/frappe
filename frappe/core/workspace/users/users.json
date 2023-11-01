@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Your Shortcuts</b></span>\",\"col\":12}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"User\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Role\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Permission Manager\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"User Profile\",\"col\":3}},{\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"User Type\",\"col\":3}},{\"type\":\"spacer\",\"data\":{\"col\":12}},{\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Reports & Masters</b></span>\",\"col\":12}},{\"type\":\"card\",\"data\":{\"card_name\":\"Users\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Logs\",\"col\":4}},{\"type\":\"card\",\"data\":{\"card_name\":\"Permissions\",\"col\":4}}]",
+ "content": "[{\"id\":\"yoydgtA2KW\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>User</b></span>\",\"col\":12}},{\"id\":\"XEns6pSN4w\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"User\",\"col\":12}}]",
  "creation": "2020-03-02 15:12:16.754449",
  "custom_blocks": [],
  "docstatus": 0,
@@ -12,14 +12,6 @@
  "is_hidden": 0,
  "label": "Users",
  "links": [
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Users",
-   "link_count": 0,
-   "onboard": 0,
-   "type": "Card Break"
-  },
   {
    "dependencies": "",
    "hidden": 0,
@@ -54,14 +46,6 @@
    "type": "Link"
   },
   {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Logs",
-   "link_count": 0,
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
    "dependencies": "",
    "hidden": 0,
    "is_query_report": 0,
@@ -82,14 +66,6 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Permissions",
-   "link_count": 0,
-   "onboard": 0,
-   "type": "Card Break"
   },
   {
    "dependencies": "",
@@ -147,7 +123,7 @@
    "type": "Link"
   }
  ],
- "modified": "2023-10-17 11:29:29.835651",
+ "modified": "2023-11-01 12:40:30.030606",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Users",
@@ -155,7 +131,12 @@
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,
- "quick_lists": [],
+ "quick_lists": [
+  {
+   "document_type": "User",
+   "label": "User"
+  }
+ ],
  "restrict_to_domain": "",
  "roles": [
   {
@@ -163,33 +144,6 @@
   }
  ],
  "sequence_id": 3.0,
- "shortcuts": [
-  {
-   "label": "User",
-   "link_to": "User",
-   "type": "DocType"
-  },
-  {
-   "label": "Role",
-   "link_to": "Role",
-   "type": "DocType"
-  },
-  {
-   "label": "Permission Manager",
-   "link_to": "permission-manager",
-   "type": "Page"
-  },
-  {
-   "label": "User Profile",
-   "link_to": "user-profile",
-   "type": "Page"
-  },
-  {
-   "doc_view": "",
-   "label": "User Type",
-   "link_to": "User Type",
-   "type": "DocType"
-  }
- ],
+ "shortcuts": [],
  "title": "Users"
 }

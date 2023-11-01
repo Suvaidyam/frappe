@@ -8,27 +8,31 @@
  "engine": "InnoDB",
  "field_order": [
   "user_details_tab",
+  "column_break_pmkd",
   "enabled",
   "section_break_3",
   "email",
   "first_name",
   "middle_name",
   "last_name",
-  "column_break0",
+  "new_password",
   "full_name",
+  "column_break0",
   "username",
   "state",
   "district",
+  "role_profile_name",
   "csc",
+  "section_break_ooba",
   "column_break_11",
   "language",
   "time_zone",
   "send_welcome_email",
   "unsubscribed",
   "user_image",
+  "column_break_yvwn",
   "roles_permissions_tab",
   "sb1",
-  "role_profile_name",
   "roles_html",
   "roles",
   "sb_allow_modules",
@@ -52,7 +56,6 @@
   "desk_theme",
   "banner_image",
   "change_password",
-  "new_password",
   "logout_all_sessions",
   "reset_password_key",
   "last_reset_password_key_generated_on",
@@ -103,6 +106,7 @@
    "default": "1",
    "fieldname": "enabled",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Enabled",
    "oldfieldname": "enabled",
    "oldfieldtype": "Check",
@@ -111,8 +115,7 @@
   {
    "depends_on": "enabled",
    "fieldname": "section_break_3",
-   "fieldtype": "Section Break",
-   "label": "Basic Info"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "email",
@@ -135,6 +138,7 @@
   {
    "fieldname": "middle_name",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Middle Name",
    "oldfieldname": "middle_name",
    "oldfieldtype": "Data"
@@ -151,6 +155,7 @@
   {
    "fieldname": "full_name",
    "fieldtype": "Data",
+   "hidden": 1,
    "in_global_search": 1,
    "in_standard_filter": 1,
    "label": "Full Name",
@@ -182,20 +187,21 @@
   {
    "fieldname": "username",
    "fieldtype": "Data",
-   "in_global_search": 1,
+   "hidden": 1,
    "in_standard_filter": 1,
-   "label": "Username",
-   "unique": 1
+   "label": "Username"
   },
   {
    "fieldname": "language",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Language",
    "options": "Language"
   },
   {
    "fieldname": "time_zone",
    "fieldtype": "Autocomplete",
+   "hidden": 1,
    "label": "Time Zone"
   },
   {
@@ -216,9 +222,10 @@
    "read_only": 1
   },
   {
-   "allow_in_quick_entry": 1,
    "fieldname": "role_profile_name",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Role Profile",
    "options": "Role Profile",
    "permlevel": 1,
@@ -245,6 +252,7 @@
    "depends_on": "enabled",
    "fieldname": "short_bio",
    "fieldtype": "Tab Break",
+   "hidden": 1,
    "label": "More Information"
   },
   {
@@ -681,16 +689,19 @@
   {
    "fieldname": "roles_permissions_tab",
    "fieldtype": "Tab Break",
+   "hidden": 1,
    "label": "Roles & Permissions"
   },
   {
    "fieldname": "settings_tab",
    "fieldtype": "Tab Break",
+   "hidden": 1,
    "label": "Settings"
   },
   {
    "fieldname": "connections_tab",
    "fieldtype": "Tab Break",
+   "hidden": 1,
    "label": "Connections",
    "show_dashboard": 1
   },
@@ -712,13 +723,15 @@
    "fieldname": "state",
    "fieldtype": "Link",
    "label": "State",
-   "options": "State"
+   "options": "State",
+   "reqd": 1
   },
   {
    "fieldname": "district",
    "fieldtype": "Link",
    "label": "District",
-   "options": "District"
+   "options": "District",
+   "reqd": 1
   },
   {
    "allow_in_quick_entry": 1,
@@ -726,6 +739,19 @@
    "fieldtype": "Link",
    "label": "Centre",
    "options": "Centre"
+  },
+  {
+   "fieldname": "column_break_pmkd",
+   "fieldtype": "Column Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "section_break_ooba",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_yvwn",
+   "fieldtype": "Column Break"
   }
  ],
  "icon": "fa fa-user",
@@ -788,7 +814,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2023-10-31 20:48:41.296109",
+ "modified": "2023-11-01 17:42:27.814577",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",
@@ -826,7 +852,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "route": "user",
  "search_fields": "full_name",
  "show_name_in_global_search": 1,
