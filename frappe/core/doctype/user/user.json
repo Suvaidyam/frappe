@@ -725,8 +725,7 @@
    "fieldname": "csc",
    "fieldtype": "Link",
    "label": "Centre",
-   "options": "Centre",
-   "reqd": 1
+   "options": "Centre"
   }
  ],
  "icon": "fa fa-user",

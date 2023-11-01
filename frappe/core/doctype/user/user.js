@@ -277,6 +277,9 @@ frappe.ui.form.on("User", {
 			frm.dirty();
 		}
 		frm.trigger("time_zone");
+		frm.set_query("state", () => {
+			return { page_length: 1000 };
+		  });
 	},
 	validate: function (frm) {
 		if (frm.roles_editor) {
@@ -340,6 +343,39 @@ frappe.ui.form.on("User", {
 			frappe.ui.toolbar.clear_cache();
 		}
 	},
+	state:function(frm){
+		frm.fields_dict["district"].get_query = function (doc) {
+			return {
+			  filters: {
+				State: frm.doc.state,
+			  },
+			  page_length: 1000
+			};
+		  },
+		  frm.fields_dict["csc"].get_query = function (doc) {
+			return {
+			  filters: {
+				State: frm.doc.state,
+			  },
+			  page_length: 1000
+			};
+		  }
+		  // clear dependent dropdowns values
+		  frm.set_value('csc', '')
+		  frm.set_value('district', '')
+	},
+	// district:function(frm){
+	// 	console.log("district update")
+	// },
+	// csc:function(frm){
+	// 	console.log("centre update")
+	// },
+	// role_profile:function(frm){
+	// 	console.log("role")
+	// },
+	// frm.fields_dict['field_1'].change(function(){
+
+	// })
 });
 
 frappe.ui.form.on("User Email", {
