@@ -304,14 +304,14 @@ frappe.ui.form.on("User", {
 				State: frm.doc.state ||"Please Select State",
 			  },
 			};
-		},
-		frm.fields_dict["district"].get_query = function (doc) {
-			return {
-			  filters: {
-				State: frm.doc.state || "Please Select state",
-			  },
-			};
 		}
+		// frm.fields_dict["district"].get_query = function (doc) {
+		// 	return {
+		// 	  filters: {
+		// 		State: frm.doc.state || "Please Select state",
+		// 	  },
+		// 	};
+		// }
 	},
 	validate: function (frm) {
 		if (frm.roles_editor) {
@@ -376,14 +376,14 @@ frappe.ui.form.on("User", {
 		}
 	},
 	state:function(frm){
-		frm.fields_dict["district"].get_query = function (doc) {
-			return {
-			  filters: {
-				State: frm.doc.state,
-			  },
-			  page_length: 1000
-			};
-		  },
+		// frm.fields_dict["district"].get_query = function (doc) {
+		// 	return {
+		// 	  filters: {
+		// 		State: frm.doc.state,
+		// 	  },
+		// 	  page_length: 1000
+		// 	};
+		//   },
 		  frm.fields_dict["csc"].get_query = function (doc) {
 			return {
 			  filters: {
@@ -394,7 +394,7 @@ frappe.ui.form.on("User", {
 		  }
 		  // clear dependent dropdowns values
 		  frm.set_value('csc', '')
-		  frm.set_value('district', '')
+		//   frm.set_value('district', '')
 	},
 	role_profile_name:function(frm){
 		var centre = frm.get_field('csc');
