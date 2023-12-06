@@ -226,7 +226,6 @@
    "in_standard_filter": 1,
    "label": "Role Profile",
    "options": "Role Profile",
-   "permlevel": 1,
    "reqd": 1
   },
   {
@@ -805,7 +804,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2023-12-06 13:08:28.297420",
+ "modified": "2023-12-06 16:36:06.799413",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",
