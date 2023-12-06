@@ -105,7 +105,6 @@
    "default": "1",
    "fieldname": "enabled",
    "fieldtype": "Check",
-   "hidden": 1,
    "label": "Enabled",
    "oldfieldname": "enabled",
    "oldfieldtype": "Check",
@@ -806,7 +805,7 @@
    "link_fieldname": "user"
   }
  ],
- "modified": "2023-11-02 10:25:17.170446",
+ "modified": "2023-12-06 13:08:28.297420",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "User",
