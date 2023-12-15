@@ -284,6 +284,15 @@ frappe.ui.form.on("User", {
 		}
 		frm.trigger("time_zone");
 		// var centre = frm.get_field('csc');
+		
+		// disable edit option for mis executive
+		if(frappe.user_roles.includes("MIS executive")){
+			if(!frappe.user_roles.includes("Administrator")){
+				frm.set_df_property('state', 'read_only', 1);
+				frm.set_df_property('role_profile_name', 'read_only', 1);
+				frm.set_df_property('csc', 'read_only', 1);
+			}
+		}
 		var centre = frm.get_field('csc');
 		if(frm.doc.role_profile_name === 'MIS executive'){
 			console.log(frm.doc.role_profile_name)
