@@ -99,6 +99,9 @@ frappe.ui.form.on("User", {
 	},
 	refresh: function (frm) {
 		let doc = frm.doc;
+		if(!frappe.user.has_role("Administrator")){
+			frm.set_df_property('role_profile_name', 'only_select', true);
+		}
 
 		if (frm.is_new()) {
 			frm.set_value("time_zone", frappe.sys_defaults.time_zone);
