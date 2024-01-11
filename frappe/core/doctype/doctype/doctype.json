@@ -742,7 +742,7 @@
    "link_fieldname": "reference_doctype"
   }
  ],
- "modified": "2023-10-26 18:31:39.932079",
+ "modified": "2024-01-11 09:58:03.185956",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "DocType",
@@ -776,9 +776,9 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "MIS executive",
-   "select": 1,
-   "share": 1
+   "role": "Admin",
+   "share": 1,
+   "write": 1
   }
  ],
  "route": "doctype",
