@@ -5,7 +5,7 @@ import frappe
 from frappe.model.document import Document
 
 desk_properties = (
-	"search_bar",
+	# "search_bar",
 	"notifications",
 	"list_sidebar",
 	"bulk_actions",
