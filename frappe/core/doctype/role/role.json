@@ -10,6 +10,7 @@
   "role_name",
   "home_page",
   "restrict_to_domain",
+  "crm_role",
   "column_break_4",
   "disabled",
   "is_custom",
@@ -142,13 +143,19 @@
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Is Custom"
+  },
+  {
+   "default": "0",
+   "fieldname": "crm_role",
+   "fieldtype": "Check",
+   "label": "CRM Role"
   }
  ],
  "icon": "fa fa-bookmark",
  "idx": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-08 15:52:37.525003",
+ "modified": "2024-01-23 12:23:56.784897",
  "modified_by": "Administrator",
  "module": "Core",
  "name": "Role",

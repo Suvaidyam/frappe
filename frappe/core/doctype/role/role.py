@@ -28,6 +28,7 @@ class Role(Document):
 		from frappe.types import DF
 
 		bulk_actions: DF.Check
+		crm_role: DF.Check
 		dashboard: DF.Check
 		desk_access: DF.Check
 		disabled: DF.Check
@@ -43,6 +44,7 @@ class Role(Document):
 		two_factor_auth: DF.Check
 		view_switcher: DF.Check
 	# end: auto-generated types
+
 	def before_rename(self, old, new, merge=False):
 		if old in STANDARD_ROLES:
 			frappe.throw(frappe._("Standard roles cannot be renamed"))
