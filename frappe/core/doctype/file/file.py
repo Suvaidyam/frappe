@@ -37,7 +37,9 @@ from .exceptions import (
 from .utils import *
 
 exclude_from_linked_with = True
-ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True  # nosemgrep
+
 URL_PREFIXES = ("http://", "https://", "/api/method/")
 FILE_ENCODING_OPTIONS = ("utf-8-sig", "utf-8", "windows-1250", "windows-1252")
 
@@ -139,7 +141,6 @@ class File(Document):
 		self.validate_file_url()
 		self.validate_file_on_disk()
 		self.file_size = frappe.form_dict.file_size or self.file_size
-		self.check_content()
 
 	def validate_attachment_references(self):
 		if not self.attached_to_doctype:
