@@ -297,6 +297,8 @@ class DataExporter:
 			return
 		if docfield.hidden:
 			return
+		if docfield.get("data_import_export_hide"):
+			return
 		if (
 			self.select_columns
 			and docfield.fieldname not in self.select_columns.get(docfield.parent, [])

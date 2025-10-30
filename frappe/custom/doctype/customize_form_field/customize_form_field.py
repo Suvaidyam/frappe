@@ -20,6 +20,7 @@ class CustomizeFormField(Document):
 		collapsible: DF.Check
 		collapsible_depends_on: DF.Code | None
 		columns: DF.Int
+		data_import_export_hide: DF.Check
 		default: DF.SmallText | None
 		depends_on: DF.Code | None
 		description: DF.Text | None

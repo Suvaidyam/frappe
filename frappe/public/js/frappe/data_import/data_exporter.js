@@ -319,6 +319,9 @@ export function get_columns_for_picker(doctype) {
 		if (df.is_virtual) {
 			keep = false;
 		}
+		if (df.data_import_export_hide) {
+			keep = false;
+		}
 		return keep;
 	};
 

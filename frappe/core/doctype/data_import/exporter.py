@@ -88,7 +88,12 @@ class Exporter:
 		meta = frappe.get_meta(doctype)
 
 		def is_exportable(df):
-			return df and df.fieldtype not in (display_fieldtypes + no_value_fields)
+			if not df or df.fieldtype in (display_fieldtypes + no_value_fields):
+				return False
+			# Check for data_import_export_hide property
+			if df.get("data_import_export_hide"):
+				return False
+			return True
 
 		# add name field
 		name_field = frappe._dict(
