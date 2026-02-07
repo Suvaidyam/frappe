@@ -477,9 +477,10 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 			</div>`;
 		});
 
+		let escaped_name = frappe.utils.escape_html(result.name);
 		let $row = $(`<div class="list-item py-2 px-2 border-bottom">
 			<div class="list-item__content" style="flex: 0 0 10px;">
-				<input type="checkbox" class="list-row-check" data-item-name="${result.name}" ${
+				<input type="checkbox" class="list-row-check" data-item-name="${escaped_name}" ${
 			result.checked ? "checked" : ""
 		}>
 			</div>
@@ -489,7 +490,7 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 		head
 			? $row.addClass("list-item--head")
 			: ($row = $(
-					`<div class="list-item-container m-0" data-item-name="${result.name}"></div>`
+					`<div class="list-item-container m-0" data-item-name="${escaped_name}"></div>`
 			  ).append($row));
 
 		return $row;

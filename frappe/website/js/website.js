@@ -180,9 +180,9 @@ $.extend(frappe, {
 				if ($.isArray(err)) {
 					err = err.join("\n");
 				}
-				console.error ? console.error(err) : console.log(err);
+				console.error(err);
 			} catch (e) {
-				console.log(data.exc);
+				console.log("Error in server response");
 			}
 		} else {
 			// if(opts.btn) {

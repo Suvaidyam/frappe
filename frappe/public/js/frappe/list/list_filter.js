@@ -156,7 +156,7 @@ export default class ListFilter {
 
 	filter_template(filter, add_new = false) {
 		return $(`
-			<li class="saved-filter-item" data-name="${filter.name}">
+			<li class="saved-filter-item" data-name="${frappe.utils.escape_html(filter.name)}">
 				<a class="dropdown-item d-flex justify-content-between align-items-center">
 					<span class="filter-label">
 						${frappe.utils.escape_html(__(filter.filter_name))}

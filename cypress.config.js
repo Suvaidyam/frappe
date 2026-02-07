@@ -4,8 +4,8 @@ const path = require("path");
 
 module.exports = defineConfig({
 	projectId: "92odwv",
-	adminPassword: "admin",
-	testUser: "frappe@example.com",
+	adminPassword: process.env.CYPRESS_ADMIN_PASSWORD || "admin",
+	testUser: process.env.CYPRESS_TEST_USER || "frappe@example.com",
 	defaultCommandTimeout: 20000,
 	pageLoadTimeout: 15000,
 	video: true,

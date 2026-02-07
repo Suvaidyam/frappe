@@ -59,7 +59,7 @@ class FormTimeline extends BaseTimeline {
 		this.timeline_wrapper.remove(this.timeline_actions_wrapper);
 		this.timeline_wrapper.prepend(`
 				<div class="timeline-item activity-title">
-				<h4>${__("Activity")}</h4>
+				<h4>${frappe.utils.escape_html(__("Activity"))}</h4>
 				</div>
 			`);
 		if (has_communications()) {
@@ -68,7 +68,7 @@ class FormTimeline extends BaseTimeline {
 				.append(
 					`
 					<div class="d-flex align-items-center show-all-activity">
-						<span style="color: var(--text-light); margin:0px 6px;">${__("Show all activity")}</span>
+						<span style="color: var(--text-light); margin:0px 6px;">${frappe.utils.escape_html(__("Show all activity"))}</span>
 						<label class="switch">
 							<input type="checkbox">
 							<span class="slider round"></span>

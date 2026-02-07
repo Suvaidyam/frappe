@@ -290,7 +290,12 @@ def _get_latest_releases(owner, repo):
 	if not r.ok:
 		return []
 
-	return r.json()
+	# Only extract fields we need to avoid storing unsanitized external data
+	return [
+		{"tag_name": str(release.get("tag_name", "")), "prerelease": bool(release.get("prerelease"))}
+		for release in r.json()
+		if isinstance(release, dict)
+	]
 
 
 @redis_cache(ttl=6 * 24 * 60 * 60, shared=True)
@@ -301,7 +306,20 @@ def _get_security_issues(owner, repo):
 	if not r.ok:
 		return []
 
-	return r.json()
+	# Only extract fields we need to avoid storing unsanitized external data
+	sanitized = []
+	for advisory in r.json():
+		if not isinstance(advisory, dict):
+			continue
+		vulns = []
+		for vuln in advisory.get("vulnerabilities", []):
+			if isinstance(vuln, dict):
+				vulns.append({
+					"vulnerable_version_range": str(vuln.get("vulnerable_version_range", "")),
+					"patched_versions": str(vuln.get("patched_versions", "")),
+				})
+		sanitized.append({"vulnerabilities": vulns})
+	return sanitized
 
 
 def parse_github_url(remote_url: str) -> tuple[str, str] | tuple[None, None]:

@@ -154,8 +154,8 @@ export default class QuickListWidget extends Widget {
 
 		if (indicator) {
 			$(`
-				<div class="status indicator-pill ${indicator[1]} ellipsis">
-					${indicator[0]}
+				<div class="status indicator-pill ${frappe.utils.escape_html(indicator[1])} ellipsis">
+					${frappe.utils.escape_html(indicator[0])}
 				</div>
 			`).appendTo($quick_list_item);
 		}

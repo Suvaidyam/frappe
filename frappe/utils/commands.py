@@ -10,7 +10,7 @@ def get_first_party_apps():
 	for org in ["frappe", "erpnext"]:
 		req = requests.get(f"https://api.github.com/users/{org}/repos", {"type": "sources", "per_page": 200})
 		if req.ok:
-			apps.extend([x["name"] for x in req.json()])
+			apps.extend([str(x.get("name", "")) for x in req.json() if isinstance(x, dict)])
 	return apps
 
 

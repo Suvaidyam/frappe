@@ -308,7 +308,7 @@ frappe.request.call = function (opts) {
 					status_code_handler(data, xhr);
 				}
 			} catch (e) {
-				console.log("Unable to handle success response", data);
+				console.log("Unable to handle success response");
 				console.error(e);
 			}
 		})

@@ -255,7 +255,7 @@ export default class WebFormList {
 		}
 
 		row_data.forEach((data_item) => {
-			let $row_element = $(`<tr id="${data_item.name}"></tr>`);
+			let $row_element = $(`<tr id="${frappe.utils.escape_html(data_item.name)}"></tr>`);
 
 			let row = new frappe.ui.WebFormListRow({
 				row: $row_element,
@@ -319,7 +319,7 @@ export default class WebFormList {
 			path = path.replace("/list", "");
 		}
 
-		window.location.href = path + "/" + name;
+		window.location.href = path + "/" + encodeURIComponent(name);
 	}
 
 	get_selected() {

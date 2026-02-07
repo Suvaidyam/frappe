@@ -91,8 +91,8 @@ let uds = conf.socketio_uds;
 let port = conf.socketio_port;
 server.listen(uds || port, () => {
 	if (uds) {
-		console.log(`Realtime service listening on UDS: ${uds}`);
+		console.log("Realtime service listening on UDS");
 	} else {
-		console.log(`Realtime service listening on: ws://0.0.0.0:${port}`);
+		console.log("Realtime service listening on WebSocket port");
 	}
 });

@@ -13,16 +13,16 @@ from frappe.utils import get_datetime, now
 
 
 def calculate_hash(path: str) -> str:
-	"""Calculate and return md5 hash of the file in binary mode.
+	"""Calculate and return sha256 hash of the file in binary mode.
 
 	Args:
 	        path (str): Path to the file to be hashed
 	"""
-	hash_md5 = hashlib.md5(usedforsecurity=False)
+	file_hash = hashlib.sha256()
 	with open(path, "rb") as f:
 		for chunk in iter(lambda: f.read(4096), b""):
-			hash_md5.update(chunk)
-	return hash_md5.hexdigest()
+			file_hash.update(chunk)
+	return file_hash.hexdigest()
 
 
 ignore_values = {

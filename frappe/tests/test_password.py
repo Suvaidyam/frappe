@@ -75,7 +75,7 @@ class TestPassword(IntegrationTestCase):
 		self.assertRaises(frappe.AuthenticationError, check_password, user, new_password)
 
 	def test_password_on_rename_user(self):
-		password = "test-rename-password"
+		password = frappe.generate_hash(length=16)
 
 		doc = self.make_email_account()
 		doc.password = password
@@ -101,9 +101,10 @@ class TestPassword(IntegrationTestCase):
 	def test_password_unset(self):
 		doc = self.make_email_account()
 
-		doc.password = "asdf"
+		test_pwd = frappe.generate_hash(length=12)
+		doc.password = test_pwd
 		doc.save()
-		self.assertEqual(doc.get_password(raise_exception=False), "asdf")
+		self.assertEqual(doc.get_password(raise_exception=False), test_pwd)
 
 		doc.password = ""
 		doc.save()

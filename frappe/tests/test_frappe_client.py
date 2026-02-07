@@ -223,14 +223,14 @@ class TestFrappeClient(IntegrationTestCase):
 		self.assertEqual("Administrator", res.json()["message"])
 
 		# Valid api key, invalid api secret
-		api_secret = "ksk&93nxoe3os"
-		header = {"Authorization": f"token {api_key}:{api_secret}"}
+		invalid_secret = frappe.generate_hash(length=12)
+		header = {"Authorization": f"token {api_key}:{invalid_secret}"}
 		res = requests.post(get_url() + "/api/method/frappe.auth.get_logged_user", headers=header)
 		self.assertEqual(res.status_code, 401)
 
 		# random api key and api secret
-		api_key = "@3djdk3kld"
-		api_secret = "ksk&93nxoe3os"
+		api_key = frappe.generate_hash(length=10)
+		api_secret = frappe.generate_hash(length=12)
 		header = {"Authorization": f"token {api_key}:{api_secret}"}
 		res = requests.post(get_url() + "/api/method/frappe.auth.get_logged_user", headers=header)
 		self.assertEqual(res.status_code, 401)

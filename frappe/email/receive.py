@@ -91,7 +91,7 @@ class EmailServer:
 				)
 
 				if cint(self.settings.use_starttls):
-					self.imap.starttls()
+					self.imap.starttls(ssl_context=ssl.create_default_context())
 
 			if self.settings.use_oauth:
 				Oauth(

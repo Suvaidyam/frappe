@@ -19,9 +19,9 @@ sass.render(
 
 		fs.writeFile(output_path, result.css, function (err) {
 			if (!err) {
-				console.log(output_path);
+				console.log("Bootstrap theme generated successfully");
 			} else {
-				console.error(err);
+				console.error("Failed to write bootstrap theme");
 			}
 		});
 	}

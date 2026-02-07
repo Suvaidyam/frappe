@@ -47,6 +47,6 @@ frappe.ui.form.make_control = function (opts) {
 	if (frappe.ui.form[control_class_name]) {
 		return new frappe.ui.form[control_class_name](opts);
 	} else {
-		console.log("Invalid Control Name: " + opts.df.fieldtype);
+		console.log("Invalid Control Name: " + String(opts.df.fieldtype).replace(/[\r\n]/g, ""));
 	}
 };

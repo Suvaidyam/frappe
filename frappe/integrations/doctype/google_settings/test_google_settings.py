@@ -10,9 +10,9 @@ from .google_settings import get_file_picker_settings
 class TestGoogleSettings(IntegrationTestCase):
 	def setUp(self):
 		settings = frappe.get_single("Google Settings")
-		settings.client_id = "test_client_id"
-		settings.app_id = "test_app_id"
-		settings.api_key = "test_api_key"
+		settings.client_id = frappe.generate_hash(length=16)
+		settings.app_id = frappe.generate_hash(length=16)
+		settings.api_key = frappe.generate_hash(length=16)
 		settings.save()
 
 	def test_picker_disabled(self):

@@ -108,7 +108,7 @@ class ScheduledJobType(Document):
 		# Maintenance jobs run at random time, the time is specific to the site though.
 		# This is done to avoid scheduling all maintenance task on all sites at the same time in
 		# multitenant deployments.
-		maintenance_offset = int(hashlib.sha1(frappe.local.site.encode()).hexdigest(), 16) % 60
+		maintenance_offset = int(hashlib.sha256(frappe.local.site.encode()).hexdigest(), 16) % 60
 
 		CRON_MAP = {
 			"Yearly": "0 0 1 1 *",
