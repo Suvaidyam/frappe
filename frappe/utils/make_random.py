@@ -1,10 +1,12 @@
-import random
 from typing import TYPE_CHECKING
 
 import frappe
+from secrets import SystemRandom
 
 if TYPE_CHECKING:
 	from frappe.model.document import Document
+
+rng = SystemRandom()
 
 settings = frappe._dict(
 	prob={
@@ -16,7 +18,7 @@ settings = frappe._dict(
 def add_random_children(doc: "Document", fieldname: str, rows, randomize: dict, unique=None):
 	nrows = rows
 	if rows > 1:
-		nrows = random.randrange(1, rows)
+		nrows = rng.randrange(1, rows)
 
 	for _ in range(nrows):
 		d = {}
@@ -24,7 +26,7 @@ def add_random_children(doc: "Document", fieldname: str, rows, randomize: dict, 
 			if isinstance(val[0], str):
 				d[key] = get_random(*val)
 			else:
-				d[key] = random.randrange(*val)
+				d[key] = rng.randrange(*val)
 
 		if unique:
 			if not doc.get(fieldname, {unique: d[unique]}):
@@ -54,8 +56,8 @@ def get_random(doctype: str, filters: dict | None = None, doc: bool = False):
 
 
 def can_make(doctype: str) -> bool:
-	return random.random() < settings.prob.get(doctype, settings.prob["default"])["make"]
+	return rng.random() < settings.prob.get(doctype, settings.prob["default"])["make"]
 
 
 def how_many(doctype: str) -> int:
-	return random.randrange(*settings.prob.get(doctype, settings.prob["default"])["qty"])
+	return rng.randrange(*settings.prob.get(doctype, settings.prob["default"])["qty"])
