@@ -1313,13 +1313,13 @@ class TestTypingValidations(IntegrationTestCase):
 class TestTBSanitization(IntegrationTestCase):
 	def test_traceback_sanitzation(self):
 		try:
-			password = "42"  # noqa: F841
-			args = {"password": "42", "pwd": "42", "safe": "safe_value"}
-			args = frappe._dict({"password": "42", "pwd": "42", "safe": "safe_value"})  # noqa: F841
+			password = frappe.generate_hash(length=6)  # noqa: F841
+			args = {"password": password, "pwd": password, "safe": "safe_value"}
+			args = frappe._dict({"password": password, "pwd": password, "safe": "safe_value"})  # noqa: F841
 			raise Exception
 		except Exception:
 			traceback = frappe.get_traceback(with_context=True)
-			self.assertNotIn("42", traceback)
+			self.assertNotIn(password, traceback)
 			self.assertIn("********", traceback)
 			self.assertIn("password =", traceback)
 			self.assertIn("safe_value", traceback)

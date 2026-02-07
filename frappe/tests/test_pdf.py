@@ -71,7 +71,7 @@ class TestPdf(IntegrationTestCase):
 		self.assertTrue(options)
 
 	def test_pdf_encryption(self):
-		password = "qwe"
+		password = frappe.generate_hash(length=12)
 		pdf = pdfgen.get_pdf(self.html, options={"password": password})
 		reader = PdfReader(io.BytesIO(pdf))
 		self.assertTrue(reader.is_encrypted)
