@@ -292,7 +292,7 @@ function get_files_to_build(files) {
 
 function build_files({ files, outdir }) {
 	let build_plugins = [vue(), html_plugin, build_cleanup_plugin, vue_style_plugin];
-	return esbuild.build(get_build_options(files, outdir, build_plugins));
+	return run_esbuild(get_build_options(files, outdir, build_plugins));
 }
 
 function build_style_files({ files, outdir, rtl_style = false }) {
@@ -311,7 +311,18 @@ function build_style_files({ files, outdir, rtl_style = false }) {
 	];
 
 	plugins.push(require("autoprefixer"));
-	return esbuild.build(get_build_options(files, outdir, build_plugins));
+	return run_esbuild(get_build_options(files, outdir, build_plugins));
+}
+
+async function run_esbuild(options) {
+	if (WATCH_MODE) {
+		options.plugins = (options.plugins || []).concat([get_watch_rebuild_plugin()]);
+		let ctx = await esbuild.context(options);
+		await ctx.watch();
+		// Return the initial build result by doing a rebuild
+		return ctx.rebuild();
+	}
+	return esbuild.build(options);
 }
 
 function get_build_options(files, outdir, plugins) {
@@ -331,19 +342,30 @@ function get_build_options(files, outdir, plugins) {
 			__VUE_PROD_DEVTOOLS__: JSON.stringify(false),
 		},
 		plugins: plugins,
-		watch: get_watch_config(),
 	};
 }
 
-function get_watch_config() {
-	if (WATCH_MODE) {
-		return {
-			async onRebuild(error, result) {
-				if (error) {
+function get_watch_rebuild_plugin() {
+	let isFirstBuild = true;
+	return {
+		name: "frappe-watch-rebuild",
+		setup(build) {
+			build.onEnd(async (result) => {
+				// Skip the first build since it's handled by the main execute() flow
+				if (isFirstBuild) {
+					isFirstBuild = false;
+					return;
+				}
+
+				if (result.errors.length > 0) {
 					log_error("There was an error during rebuilding changes.");
 					log();
-					log(chalk.dim(error.stack));
-					notify_redis({ error });
+					let formatted = await esbuild.formatMessages(result.errors, {
+						kind: "error",
+						terminalWidth: 100,
+					});
+					log(chalk.dim(formatted.join("\n")));
+					notify_redis({ error: { errors: result.errors } });
 				} else {
 					let { new_assets_json, prev_assets_json } = await write_assets_json(
 						result.metafile
@@ -364,10 +386,9 @@ function get_watch_config() {
 					}
 					notify_redis({ success: true, changed_files });
 				}
-			},
-		};
-	}
-	return null;
+			});
+		},
+	};
 }
 
 function log_built_assets(results) {
@@ -558,7 +579,9 @@ async function notify_redis({ error, success, changed_files }) {
 			kind: "error",
 			terminalWidth: 100,
 		});
-		let stack = error.stack.replace(new RegExp(bench_path, "g"), "");
+		let stack = error.stack
+			? error.stack.replace(new RegExp(bench_path, "g"), "")
+			: formatted.join("\n");
 		payload = {
 			error,
 			formatted,
