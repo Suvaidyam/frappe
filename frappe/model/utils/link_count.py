@@ -2,9 +2,11 @@
 # License: MIT. See LICENSE
 
 from collections import defaultdict
-from random import random
+from secrets import SystemRandom
 
 import frappe
+
+rng = SystemRandom()
 
 ignore_doctypes = {
 	"DocType",
@@ -36,7 +38,7 @@ LINK_COUNT_BUFFER_SIZE = 256
 def notify_link_count(doctype, name):
 	"""updates link count for given document"""
 
-	if doctype in ignore_doctypes or not frappe.request or random() < 0.9:  # Sample 10%
+	if doctype in ignore_doctypes or not frappe.request or rng.random() < 0.9:  # Sample 10%
 		return
 
 	if not hasattr(frappe.local, "_link_count"):

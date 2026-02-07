@@ -3,7 +3,7 @@ import sys
 import typing
 from contextlib import contextmanager
 from functools import cached_property
-from random import choice
+from secrets import SystemRandom
 from threading import Thread
 from time import time
 from unittest.mock import patch
@@ -25,6 +25,7 @@ except Exception:
 	_site = None
 
 authorization_token = None
+rng = SystemRandom()
 
 
 @contextmanager
@@ -255,7 +256,7 @@ class TestResourceAPI(FrappeAPITestCase):
 	def test_update_document(self):
 		generated_desc = frappe.mock("paragraph")
 		data = {"description": generated_desc, "sid": self.sid}
-		random_doc = choice(self.GENERATED_DOCUMENTS)
+		random_doc = rng.choice(self.GENERATED_DOCUMENTS)
 
 		response = self.put(self.resource(self.DOCTYPE, random_doc), data=data)
 		self.assertEqual(response.status_code, 200)
@@ -265,7 +266,7 @@ class TestResourceAPI(FrappeAPITestCase):
 		self.assertEqual(response.json["data"]["description"], generated_desc)
 
 	def test_delete_document(self):
-		doc_to_delete = choice(self.GENERATED_DOCUMENTS)
+		doc_to_delete = rng.choice(self.GENERATED_DOCUMENTS)
 		response = self.delete(self.resource(self.DOCTYPE, doc_to_delete))
 		self.assertEqual(response.status_code, 202)
 		self.assertDictEqual(response.json, {"data": "ok"})

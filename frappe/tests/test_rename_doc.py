@@ -4,7 +4,7 @@
 import os
 from contextlib import contextmanager, redirect_stdout
 from io import StringIO
-from random import choice, sample
+from secrets import SystemRandom
 from unittest.mock import patch
 
 import frappe
@@ -15,6 +15,8 @@ from frappe.model.rename_doc import bulk_rename, update_document_title
 from frappe.modules.utils import get_doc_path
 from frappe.tests import IntegrationTestCase
 from frappe.utils import add_to_date, now
+
+rng = SystemRandom()
 
 
 @contextmanager
@@ -122,7 +124,7 @@ class TestRenameDoc(IntegrationTestCase):
 
 	def test_rename_doc(self):
 		"""Rename an existing document via frappe.rename_doc"""
-		old_name = choice(self.available_documents)
+		old_name = rng.choice(self.available_documents)
 		new_name = old_name + ".new"
 		self.assertEqual(new_name, frappe.rename_doc(self.test_doctype, old_name, new_name, force=True))
 		self.available_documents.remove(old_name)
@@ -130,7 +132,7 @@ class TestRenameDoc(IntegrationTestCase):
 
 	def test_merging_docs(self):
 		"""Merge two documents via frappe.rename_doc"""
-		first_todo, second_todo = sample(self.available_documents, 2)
+		first_todo, second_todo = rng.sample(self.available_documents, 2)
 
 		second_todo_doc = frappe.get_doc(self.test_doctype, second_todo)
 		second_todo_doc.priority = "High"

@@ -1,11 +1,12 @@
 from contextlib import contextmanager
-from random import choice
+from secrets import SystemRandom
 
 import frappe
 from frappe.model import core_doctypes_list, get_permitted_fields, is_default_field
 from frappe.model.utils import get_fetch_values
 from frappe.tests import IntegrationTestCase
 
+rng = SystemRandom()
 
 class TestModelUtils(IntegrationTestCase):
 	def test_get_fetch_values(self):
@@ -41,7 +42,7 @@ class TestModelUtils(IntegrationTestCase):
 
 		# everyone should have access to all fields of core doctypes
 		with set_user("Guest"):
-			picked_doctype = choice(core_doctypes_list)
+			picked_doctype = rng.choice(core_doctypes_list)
 			core_permitted_fields = get_permitted_fields(picked_doctype)
 			picked_doctype_all_columns = frappe.get_meta(picked_doctype).get_valid_columns()
 			self.assertSequenceEqual(core_permitted_fields, picked_doctype_all_columns)

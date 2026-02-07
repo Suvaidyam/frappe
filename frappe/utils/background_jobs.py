@@ -1,5 +1,5 @@
 import os
-import random
+from secrets import SystemRandom
 import signal
 import socket
 import sys
@@ -45,6 +45,8 @@ MAX_QUEUED_JOBS = 500  # frappe.enqueue will start failing when these many jobs 
 # When too many jobs are pending in queue, order can be selectively flipped to LIFO to give better
 # response latencies to interactive jobs.
 QUEUE_STARVATION_THRESHOLD = 16
+
+rng = SystemRandom()
 
 
 _redis_queue_conn = None
@@ -384,7 +386,7 @@ class FrappeWorkerNoFork(FrappeWorker):
 		self.push_exc_handler(self.no_fork_exception_handler)
 
 	def work(self, *args, **kwargs):
-		kwargs["max_jobs"] = RQ_MAX_JOBS + random.randint(0, RQ_MAX_JOBS_JITTER)
+		kwargs["max_jobs"] = RQ_MAX_JOBS + rng.randint(0, RQ_MAX_JOBS_JITTER)
 		return super().work(*args, **kwargs)
 
 	def execute_job(self, job: "Job", queue: "Queue"):
