@@ -1,4 +1,4 @@
-import random
+from secrets import choice
 from string import printable
 from time import time
 from unittest import TestCase
@@ -16,7 +16,7 @@ class TestPasswordStrength(TestCase):
 		reraise=True,
 	)
 	def test_long_password(self):
-		password = "".join(random.choice(printable) for _ in range(600))
+		password = "".join(choice(printable) for _ in range(600))
 
 		start_second = time()
 		result = test_password_strength(password)

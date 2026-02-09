@@ -3,7 +3,7 @@
 
 import datetime
 from math import ceil
-from random import choice
+from secrets import SystemRandom
 from unittest.mock import patch
 
 import frappe
@@ -19,6 +19,8 @@ from frappe.tests.test_query_builder import db_type_is, run_only_if, unimplement
 from frappe.utils import add_days, now, random_string, set_request
 from frappe.utils.data import now_datetime
 from frappe.utils.testutils import clear_custom_fields
+
+rng = SystemRandom()
 
 
 class TestDB(IntegrationTestCase):
@@ -365,8 +367,8 @@ class TestDB(IntegrationTestCase):
 			doc.insert()
 			created_docs.append(doc.name)
 
-		random_field = choice(fields).lower()
-		random_doc = choice(created_docs)
+		random_field = rng.choice(fields).lower()
+		random_doc = rng.choice(created_docs)
 		random_value = random_string(20)
 
 		# Testing read

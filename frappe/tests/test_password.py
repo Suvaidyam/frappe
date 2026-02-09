@@ -12,10 +12,13 @@ class TestPassword(IntegrationTestCase):
 		frappe.delete_doc("Email Account", "Test Email Account Password")
 		frappe.delete_doc("Email Account", "Test Email Account Password-new")
 
+	def _make_test_password(self):
+		return frappe.generate_hash(length=12)
+
 	def test_encrypted_password(self):
 		doc = self.make_email_account()
 
-		new_password = "test-password"
+		new_password = self._make_test_password()
 		doc.password = new_password
 		doc.save()
 
@@ -35,6 +38,7 @@ class TestPassword(IntegrationTestCase):
 
 	def make_email_account(self, name="Test Email Account Password"):
 		if not frappe.db.exists("Email Account", name):
+			password = self._make_test_password()
 			return frappe.get_doc(
 				{
 					"doctype": "Email Account",
@@ -44,7 +48,7 @@ class TestPassword(IntegrationTestCase):
 					"smtp_server": "test.example.com",
 					"pop3_server": "pop.test.example.com",
 					"email_id": "test-password@example.com",
-					"password": "password",
+					"password": password,
 				}
 			).insert()
 
@@ -52,8 +56,8 @@ class TestPassword(IntegrationTestCase):
 			return frappe.get_doc("Email Account", name)
 
 	def test_hashed_password(self, user="test@example.com"):
-		old_password = "Eastern_43A1W"
-		new_password = "Eastern_43A1W-new"
+		old_password = self._make_test_password()
+		new_password = self._make_test_password()
 
 		update_password(user, new_password)
 
@@ -75,7 +79,7 @@ class TestPassword(IntegrationTestCase):
 		self.assertRaises(frappe.AuthenticationError, check_password, user, new_password)
 
 	def test_password_on_rename_user(self):
-		password = "test-rename-password"
+		password = self._make_test_password()
 
 		doc = self.make_email_account()
 		doc.password = password
@@ -101,9 +105,10 @@ class TestPassword(IntegrationTestCase):
 	def test_password_unset(self):
 		doc = self.make_email_account()
 
-		doc.password = "asdf"
+		password = self._make_test_password()
+		doc.password = password
 		doc.save()
-		self.assertEqual(doc.get_password(raise_exception=False), "asdf")
+		self.assertEqual(doc.get_password(raise_exception=False), password)
 
 		doc.password = ""
 		doc.save()

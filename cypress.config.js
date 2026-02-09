@@ -2,9 +2,14 @@ const { defineConfig } = require("cypress");
 const fs = require("fs");
 const path = require("path");
 
+const adminPassword = process.env.CYPRESS_ADMIN_PASSWORD;
+if (!adminPassword) {
+	throw new Error("CYPRESS_ADMIN_PASSWORD must be set for Cypress tests.");
+}
+
 module.exports = defineConfig({
 	projectId: "92odwv",
-	adminPassword: "admin",
+	adminPassword,
 	testUser: "frappe@example.com",
 	defaultCommandTimeout: 20000,
 	pageLoadTimeout: 15000,

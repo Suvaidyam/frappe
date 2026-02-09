@@ -14,10 +14,13 @@ from frappe.utils.data import get_url
 
 
 class TestFrappeClient(IntegrationTestCase):
-	PASSWORD = frappe.conf.admin_password or "admin"
+	def setUp(self):
+		super().setUp()
+		if not self.ADMIN_PASSWORD:
+			raise frappe.ValidationError("Admin password must be set for FrappeClient tests.")
 
 	def test_insert_many(self):
-		server = FrappeClient(get_url(), "Administrator", self.PASSWORD, verify=False)
+		server = FrappeClient(get_url(), "Administrator", self.ADMIN_PASSWORD, verify=False)
 		server.insert_many(
 			[
 				{"doctype": "Note", "title": "Sing"},
@@ -37,7 +40,7 @@ class TestFrappeClient(IntegrationTestCase):
 		self.assertIn("sixpence", records)
 
 	def test_create_doc(self):
-		server = FrappeClient(get_url(), "Administrator", self.PASSWORD, verify=False)
+		server = FrappeClient(get_url(), "Administrator", self.ADMIN_PASSWORD, verify=False)
 		response = server.insert({"doctype": "Note", "title": "test_create"})
 
 		for field in default_fields:
@@ -47,13 +50,13 @@ class TestFrappeClient(IntegrationTestCase):
 		self.assertEqual(response.get("title"), "test_create")
 
 	def test_list_docs(self):
-		server = FrappeClient(get_url(), "Administrator", self.PASSWORD, verify=False)
+		server = FrappeClient(get_url(), "Administrator", self.ADMIN_PASSWORD, verify=False)
 		doc_list = server.get_list("Note")
 
 		self.assertTrue(len(doc_list))
 
 	def test_list_summary(self):
-		server = FrappeClient(get_url(), "Administrator", self.PASSWORD, verify=False)
+		server = FrappeClient(get_url(), "Administrator", self.ADMIN_PASSWORD, verify=False)
 		server.insert_many(
 			[
 				{"doctype": "Note", "title": "Sing"},
@@ -86,7 +89,7 @@ class TestFrappeClient(IntegrationTestCase):
 		USER = "Administrator"
 		TITLE = "get_this"
 		DOCTYPE = "Note"
-		server = FrappeClient(get_url(), "Administrator", self.PASSWORD, verify=False)
+		server = FrappeClient(get_url(), "Administrator", self.ADMIN_PASSWORD, verify=False)
 
 		NAME = server.insert({"doctype": DOCTYPE, "title": TITLE}).get("name")
 		doc = server.get_doc(DOCTYPE, NAME)
@@ -101,20 +104,20 @@ class TestFrappeClient(IntegrationTestCase):
 
 	def test_get_value_by_filters(self):
 		CONTENT = "test get value"
-		server = FrappeClient(get_url(), "Administrator", self.PASSWORD, verify=False)
+		server = FrappeClient(get_url(), "Administrator", self.ADMIN_PASSWORD, verify=False)
 		server.insert({"doctype": "Note", "title": "get_value", "content": CONTENT}).get("name")
 
 		self.assertEqual(server.get_value("Note", "content", {"title": "get_value"}).get("content"), CONTENT)
 
 	def test_get_value_by_name(self):
-		server = FrappeClient(get_url(), "Administrator", self.PASSWORD, verify=False)
+		server = FrappeClient(get_url(), "Administrator", self.ADMIN_PASSWORD, verify=False)
 		CONTENT = "test get value"
 		NAME = server.insert({"doctype": "Note", "title": "get_value", "content": CONTENT}).get("name")
 
 		self.assertEqual(server.get_value("Note", "content", NAME).get("content"), CONTENT)
 
 	def test_get_value_with_malicious_query(self):
-		server = FrappeClient(get_url(), "Administrator", self.PASSWORD, verify=False)
+		server = FrappeClient(get_url(), "Administrator", self.ADMIN_PASSWORD, verify=False)
 		server.insert({"doctype": "Note", "title": "get_value"})
 
 		self.assertRaises(
@@ -126,7 +129,7 @@ class TestFrappeClient(IntegrationTestCase):
 		)
 
 	def test_get_single(self):
-		server = FrappeClient(get_url(), "Administrator", self.PASSWORD, verify=False)
+		server = FrappeClient(get_url(), "Administrator", self.ADMIN_PASSWORD, verify=False)
 		server.set_value("Website Settings", "Website Settings", "title_prefix", "test-prefix")
 		self.assertEqual(
 			server.get_value("Website Settings", "title_prefix", "Website Settings").get("title_prefix"),
@@ -140,7 +143,7 @@ class TestFrappeClient(IntegrationTestCase):
 		frappe.db.commit()
 
 	def test_update_doc(self):
-		server = FrappeClient(get_url(), "Administrator", self.PASSWORD, verify=False)
+		server = FrappeClient(get_url(), "Administrator", self.ADMIN_PASSWORD, verify=False)
 		resp = server.insert({"doctype": "Note", "title": "Sing"})
 		doc = server.get_doc("Note", resp.get("name"))
 
@@ -150,7 +153,7 @@ class TestFrappeClient(IntegrationTestCase):
 		self.assertTrue(doc["content"] == CONTENT)
 
 	def test_update_child_doc(self):
-		server = FrappeClient(get_url(), "Administrator", self.PASSWORD, verify=False)
+		server = FrappeClient(get_url(), "Administrator", self.ADMIN_PASSWORD, verify=False)
 		frappe.db.delete("Contact", {"first_name": "George", "last_name": "Steevens"})
 		frappe.db.delete("Contact", {"first_name": "William", "last_name": "Shakespeare"})
 		frappe.db.delete("Communication", {"reference_doctype": "Event"})
@@ -192,7 +195,7 @@ class TestFrappeClient(IntegrationTestCase):
 		self.assertTrue(frappe.db.exists("Communication Link", {"link_name": "William Shakespeare"}))
 
 	def test_delete_doc(self):
-		server = FrappeClient(get_url(), "Administrator", self.PASSWORD, verify=False)
+		server = FrappeClient(get_url(), "Administrator", self.ADMIN_PASSWORD, verify=False)
 		NAME_TO_DELETE = server.insert({"doctype": "Note", "title": "Sing"}).get("name")
 		server.delete("Note", NAME_TO_DELETE)
 		self.assertFalse(frappe.db.get_value("Note", NAME_TO_DELETE))

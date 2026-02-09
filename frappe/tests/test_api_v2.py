@@ -1,5 +1,5 @@
 import typing
-from random import choice
+from secrets import SystemRandom
 
 import requests
 
@@ -9,6 +9,7 @@ from frappe.tests.test_api import FrappeAPITestCase, suppress_stdout
 from frappe.tests.utils import toggle_test_mode, whitelist_for_tests
 
 authorization_token = None
+rng = SystemRandom()
 
 
 resource_key = {
@@ -112,7 +113,7 @@ class TestResourceAPIV2(FrappeAPITestCase):
 		self.assertNotIn("docstatus", data)
 
 	def test_delete_document(self):
-		doc_to_delete = choice(self.GENERATED_DOCUMENTS)
+		doc_to_delete = rng.choice(self.GENERATED_DOCUMENTS)
 		response = self.delete(self.resource(self.DOCTYPE, doc_to_delete), data={"sid": self.sid})
 		self.assertEqual(response.status_code, 202)
 		self.assertDictEqual(response.json, {"data": "ok"})
@@ -128,7 +129,7 @@ class TestResourceAPIV2(FrappeAPITestCase):
 	def test_update_document(self):
 		generated_desc = frappe.mock("paragraph")
 		data = {"description": generated_desc, "sid": self.sid}
-		random_doc = choice(self.GENERATED_DOCUMENTS)
+		random_doc = rng.choice(self.GENERATED_DOCUMENTS)
 
 		response = self.patch(self.resource(self.DOCTYPE, random_doc), data=data)
 		self.assertEqual(response.status_code, 200)
@@ -326,3 +327,4 @@ def test(*, fail=False, handled=True, message="Failed"):
 			1 / 0
 	else:
 		frappe.msgprint(message)
+ rng = SystemRandom()
