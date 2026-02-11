@@ -51,7 +51,6 @@ frappe.ui.Filter = class {
 			Code: ["Between", "Timespan", ">", "<", ">=", "<=", "in", "not in"],
 			"HTML Editor": ["Between", "Timespan", ">", "<", ">=", "<=", "in", "not in"],
 			"Markdown Editor": ["Between", "Timespan", ">", "<", ">=", "<=", "in", "not in"],
-			Password: ["Between", "Timespan", ">", "<", ">=", "<=", "in", "not in"],
 			Rating: ["like", "not like", "Between", "in", "not in", "Timespan"],
 			Int: ["like", "not like", "Between", "in", "not in", "Timespan"],
 			Float: ["like", "not like", "Between", "in", "not in", "Timespan"],
@@ -226,7 +225,12 @@ frappe.ui.Filter = class {
 			this.remove();
 			return false;
 		}
-
+		// 🔐 Security: Block password filtering completely
+		if (original_docfield.fieldtype === "Password") {
+			console.warn("Filtering by Password fields is not allowed.");
+			this.remove();
+			return false;
+		}
 		let df = copy_dict(original_docfield);
 
 		// filter field shouldn't be read only or hidden

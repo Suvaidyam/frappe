@@ -5,14 +5,14 @@ import frappe
 from frappe.tests import IntegrationTestCase
 
 from .google_settings import get_file_picker_settings
-
+import secrets
 
 class TestGoogleSettings(IntegrationTestCase):
 	def setUp(self):
 		settings = frappe.get_single("Google Settings")
 		settings.client_id = "test_client_id"
 		settings.app_id = "test_app_id"
-		settings.api_key = "test_api_key"
+		settings.api_key = secrets.token_hex(16)
 		settings.save()
 
 	def test_picker_disabled(self):

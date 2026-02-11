@@ -4,7 +4,7 @@
 import base64
 
 import requests
-
+import secrets
 import frappe
 from frappe.core.doctype.user.user import generate_keys
 from frappe.frappeclient import FrappeClient, FrappeException
@@ -226,14 +226,14 @@ class TestFrappeClient(IntegrationTestCase):
 		self.assertEqual("Administrator", res.json()["message"])
 
 		# Valid api key, invalid api secret
-		api_secret = "ksk&93nxoe3os"
+		api_secret = secrets.token_hex(16)
 		header = {"Authorization": f"token {api_key}:{api_secret}"}
 		res = requests.post(get_url() + "/api/method/frappe.auth.get_logged_user", headers=header)
 		self.assertEqual(res.status_code, 401)
 
 		# random api key and api secret
-		api_key = "@3djdk3kld"
-		api_secret = "ksk&93nxoe3os"
+		api_key = secrets.token_hex(16)
+		api_secret = secrets.token_hex(16)
 		header = {"Authorization": f"token {api_key}:{api_secret}"}
 		res = requests.post(get_url() + "/api/method/frappe.auth.get_logged_user", headers=header)
 		self.assertEqual(res.status_code, 401)
